@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(BankingSystemDbContext))]
-    [Migration("20250618080351_InitialSetup")]
-    partial class InitialSetup
+    [Migration("20250618172545_Initial-Migration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,14 +60,10 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<Guid>("MerchantId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Number")
                         .IsRequired()
@@ -88,14 +84,24 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MerchantId");
-
                     b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("ef149a3e-2c0f-45ef-b358-908fa8aa431e"),
+                            City = "Sofia",
+                            Country = "Bulgaria",
+                            CreatedAt = new DateTime(2025, 6, 18, 17, 25, 45, 446, DateTimeKind.Utc).AddTicks(5505),
+                            IsDeleted = false,
+                            Number = "123",
+                            PostalCode = "1000",
+                            Street = "Main St."
+                        });
                 });
 
             modelBuilder.Entity("BankingSystem.Domain.Entities.ApplicationRole", b =>
@@ -108,7 +114,6 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -123,7 +128,6 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -141,7 +145,6 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -179,7 +182,6 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
@@ -210,7 +212,6 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -238,7 +239,6 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -253,6 +253,20 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasFilter("[SecondAddressId] IS NOT NULL");
 
                     b.ToTable("Merchants");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("1c751a11-50a3-4574-b65d-ca3272b13fd5"),
+                            BoardingDate = new DateTime(2025, 6, 18, 17, 25, 45, 447, DateTimeKind.Utc).AddTicks(8998),
+                            Country = "Bulgaria",
+                            CreatedAt = new DateTime(2025, 6, 18, 17, 25, 45, 447, DateTimeKind.Utc).AddTicks(8990),
+                            IsDeleted = false,
+                            MainAddressId = new Guid("ef149a3e-2c0f-45ef-b358-908fa8aa431e"),
+                            Name = "Acme Online Store",
+                            PartnerId = new Guid("bf9b7e93-aa9a-4686-b770-b6184245514e"),
+                            URL = "https://acmestore.com"
+                        });
                 });
 
             modelBuilder.Entity("BankingSystem.Domain.Entities.Partner", b =>
@@ -265,7 +279,6 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -280,12 +293,20 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Partners");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("bf9b7e93-aa9a-4686-b770-b6184245514e"),
+                            CreatedAt = new DateTime(2025, 6, 18, 17, 25, 45, 447, DateTimeKind.Utc).AddTicks(9955),
+                            IsDeleted = false,
+                            Name = "Acme Financial Group"
+                        });
                 });
 
             modelBuilder.Entity("BankingSystem.Domain.Entities.Transaction", b =>
@@ -301,7 +322,6 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Currency")
@@ -309,8 +329,10 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasMaxLength(3)
                         .HasColumnType("nvarchar(3)");
 
-                    b.Property<int>("Direction")
-                        .HasColumnType("int");
+                    b.Property<string>("Direction")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("ExternalID")
                         .IsRequired()
@@ -327,8 +349,10 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasMaxLength(34)
                         .HasColumnType("nvarchar(34)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
 
                     b.Property<string>("TargetIBAN")
                         .IsRequired()
@@ -339,7 +363,6 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -362,17 +385,6 @@ namespace BankingSystem.Infrastructure.Migrations
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BankingSystem.Domain.Entities.Address", b =>
-                {
-                    b.HasOne("BankingSystem.Domain.Entities.Merchant", "Merchant")
-                        .WithMany()
-                        .HasForeignKey("MerchantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Merchant");
                 });
 
             modelBuilder.Entity("BankingSystem.Domain.Entities.Merchant", b =>

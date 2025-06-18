@@ -24,7 +24,7 @@ public abstract class BaseEntity<TId> : ISoftDelete
 	/// <summary>
 	/// The timestamp when the entity was initially created.
 	/// </summary>
-	public DateTime CreatedAt { get; set; }
+	public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
 	/// <summary>
 	/// The timestamp when the entity was last updated.
@@ -34,10 +34,10 @@ public abstract class BaseEntity<TId> : ISoftDelete
 	/// <summary>
 	/// The identifier or name of the actor who originally created the entity.
 	/// </summary>
-	public string CreatedBy { get; set; }
+	public string? CreatedBy { get; set; }
 
 	/// <summary>
 	/// The identifier or name of the actor who last updated the entity.
 	/// </summary>
-	public string UpdatedBy { get; set; }
+	public string? UpdatedBy { get; set; }
 }

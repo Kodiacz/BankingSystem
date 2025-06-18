@@ -25,5 +25,21 @@ public class AddressEntityConfiguration : IEntityTypeConfiguration<Address>
 		builder.Property(a => a.Country)
 			.IsRequired()
 			.HasMaxLength(COUNTRY_MAX_LENGTH);
+
+		builder
+			.HasData(CreateDefaultAddress());
+	}
+
+	private Address CreateDefaultAddress()
+	{
+		return new()
+		{
+			Id = Guid.Parse("ef149a3e-2c0f-45ef-b358-908fa8aa431e"),
+			Street = "Main St.",
+			Number = "123",
+			City = "Sofia",
+			PostalCode = "1000",
+			Country = "Bulgaria",
+		};
 	}
 }

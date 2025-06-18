@@ -6,9 +6,10 @@ public class TransactionEntityConfiguration : IEntityTypeConfiguration<Transacti
 	{
 		builder.HasKey(t => t.Id);
 
-		builder
-			.Property(t => t.Direction)
-			.IsRequired();
+		builder.Property(t => t.Direction)
+			.HasConversion<string>()
+			.HasMaxLength(DIRECTION_MAX_LENGTH)
+			.HasColumnType($"varchar({DIRECTION_MAX_LENGTH})");
 
 		builder
 			.Property(t => t.Amount)
@@ -30,9 +31,10 @@ public class TransactionEntityConfiguration : IEntityTypeConfiguration<Transacti
 			.IsRequired()
 			.HasMaxLength(IBAN_MAX_LENGTH);
 
-		builder
-			.Property(t => t.Status)
-			.IsRequired();
+		builder.Property(t => t.Status)
+			.HasConversion<string>()
+			.HasMaxLength(STATUS_MAX_LENGTH)
+			.HasColumnType($"varchar({STATUS_MAX_LENGTH})");
 
 		builder
 			.Property(t => t.ExternalID)

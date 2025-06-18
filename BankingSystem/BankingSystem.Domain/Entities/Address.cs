@@ -11,7 +11,4 @@ public class Address : BaseEntity<Guid>
 	public string City { get; set; } = string.Empty;
 
 	public string Country { get; set; } = string.Empty;
-
-	public Guid MerchantId { get; set; }
-	public Merchant Merchant { get; set; }
 }

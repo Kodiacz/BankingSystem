@@ -16,4 +16,6 @@ public static class EntityConfigurationConstants
 
 	public const int CURRENCY_MAX_LENGTH = 3;
 	public const int IBAN_MAX_LENGTH = 34;
+	public const int DIRECTION_MAX_LENGTH = 10;
+	public const int STATUS_MAX_LENGTH = 15;
 }
