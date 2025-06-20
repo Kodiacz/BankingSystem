@@ -4,10 +4,12 @@ public class ApplicationRole : BaseEntity<Guid>
 {
 	public ApplicationRole()
 	{
-		this.Users = new List<ApplicationUser>();
+		this.UserRoles = new List<ApplicationUserRole>();
 	}
 
-	public string Name { get; set; } = string.Empty;
+	public ApplicationRoleNames Name { get; set; }
 
-	public IEnumerable<ApplicationUser> Users { get; set; }
+	public string Description { get; set; }
+
+	public IEnumerable<ApplicationUserRole> UserRoles { get; set; }
 }

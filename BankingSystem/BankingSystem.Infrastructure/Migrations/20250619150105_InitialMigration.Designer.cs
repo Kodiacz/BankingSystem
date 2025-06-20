@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(BankingSystemDbContext))]
-    [Migration("20250618172545_Initial-Migration")]
+    [Migration("20250619150105_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -24,21 +24,6 @@ namespace BankingSystem.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("ApplicationRoleApplicationUser", b =>
-                {
-                    b.Property<Guid>("RolesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("RolesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("ApplicationRoleApplicationUser");
-                });
 
             modelBuilder.Entity("BankingSystem.Domain.Entities.Address", b =>
                 {
@@ -96,7 +81,7 @@ namespace BankingSystem.Infrastructure.Migrations
                             Id = new Guid("ef149a3e-2c0f-45ef-b358-908fa8aa431e"),
                             City = "Sofia",
                             Country = "Bulgaria",
-                            CreatedAt = new DateTime(2025, 6, 18, 17, 25, 45, 446, DateTimeKind.Utc).AddTicks(5505),
+                            CreatedAt = new DateTime(2025, 6, 19, 15, 1, 4, 498, DateTimeKind.Utc).AddTicks(2235),
                             IsDeleted = false,
                             Number = "123",
                             PostalCode = "1000",
@@ -116,13 +101,18 @@ namespace BankingSystem.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -132,7 +122,28 @@ namespace BankingSystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("ApplicationRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a03cb524-1815-4b14-8ea3-e6a3dd206c48"),
+                            CreatedAt = new DateTime(2025, 6, 19, 15, 1, 4, 497, DateTimeKind.Utc).AddTicks(4270),
+                            Description = "Default user role with basic permissions.",
+                            IsDeleted = false,
+                            Name = "NormalUser"
+                        },
+                        new
+                        {
+                            Id = new Guid("6fd4d239-a763-4ee9-a125-2d5348a0665a"),
+                            CreatedAt = new DateTime(2025, 6, 19, 15, 1, 4, 497, DateTimeKind.Utc).AddTicks(4278),
+                            Description = "Administrator role with full permissions.",
+                            IsDeleted = false,
+                            Name = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("BankingSystem.Domain.Entities.ApplicationUser", b =>
@@ -192,6 +203,63 @@ namespace BankingSystem.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ApplicationUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e12bde0e-828c-409b-8087-84450617dcd8"),
+                            CreatedAt = new DateTime(2025, 6, 19, 15, 1, 4, 497, DateTimeKind.Utc).AddTicks(812),
+                            CreatedBy = "System",
+                            Email = "SysAdmin@gmail.com",
+                            FirstName = "Sys",
+                            IsDeleted = false,
+                            LastName = "Admin",
+                            PasswordHash = "XMb6cl4NnZEV4mNQCGoLCJ0aU/H//ZK1IAIcyxvZvAOUaVoTyZAB+ZBpQz9fhZQCtSvjdHg5yjxDQB7DyeEScw==",
+                            PasswordSalt = "VEyOlH78ICKzMbFs/99lHZ+XmWsVSw1XoQ2O9ymigRcLE8aBf8Ebq4rBEh1kcsYZqJHs2+MSQE83m5X8Q8aEWzbqgizJ1kYB8rKN7gT+GSFQ9u7Mmal7MyCraMYe0s3BVshqO4FO1Y0gQkWVtL+6CWnfAWwZOF+x7iMcQsbXp1U=",
+                            PhoneNumber = "1234567890",
+                            UserName = "SysAdmin"
+                        },
+                        new
+                        {
+                            Id = new Guid("270c2aff-3a9b-4cdd-8eaf-b77181cc7c9b"),
+                            CreatedAt = new DateTime(2025, 6, 19, 15, 1, 4, 497, DateTimeKind.Utc).AddTicks(918),
+                            CreatedBy = "System",
+                            Email = "NormalUser@gmail.com",
+                            FirstName = "Normal",
+                            IsDeleted = false,
+                            LastName = "User",
+                            PasswordHash = "4ZTQ/j0CN2KvXIwGoEM2f9rPZ+T09wVc5Ek0JHkIZkP1BeZaYiPNIA2cptImGC+6dX8zBSNRaeIKyOuSgIhaZQ==",
+                            PasswordSalt = "Vox9j92SyA5tFQqDWR+NlUfHsxfqdZ6qD+NcGxiVbnEXlBD02TnbbLz/y64dwBWS/xAikghVRVwKlcts5XLnbfbbm7uuB9WjC1eTpV2j7180bOwHe/NFYDpVNH7fwj3Bn6p/wYv2XOEH2mXTIDeEufhHFZOtvJtP/cQrkF/zyzg=",
+                            PhoneNumber = "0987654321",
+                            UserName = "NormalUser"
+                        });
+                });
+
+            modelBuilder.Entity("BankingSystem.Domain.Entities.ApplicationUserRole", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("ApplicationUserRole");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("e12bde0e-828c-409b-8087-84450617dcd8"),
+                            RoleId = new Guid("6fd4d239-a763-4ee9-a125-2d5348a0665a")
+                        },
+                        new
+                        {
+                            UserId = new Guid("270c2aff-3a9b-4cdd-8eaf-b77181cc7c9b"),
+                            RoleId = new Guid("a03cb524-1815-4b14-8ea3-e6a3dd206c48")
+                        });
                 });
 
             modelBuilder.Entity("BankingSystem.Domain.Entities.Merchant", b =>
@@ -258,9 +326,9 @@ namespace BankingSystem.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("1c751a11-50a3-4574-b65d-ca3272b13fd5"),
-                            BoardingDate = new DateTime(2025, 6, 18, 17, 25, 45, 447, DateTimeKind.Utc).AddTicks(8998),
+                            BoardingDate = new DateTime(2025, 6, 19, 15, 1, 4, 501, DateTimeKind.Utc).AddTicks(1046),
                             Country = "Bulgaria",
-                            CreatedAt = new DateTime(2025, 6, 18, 17, 25, 45, 447, DateTimeKind.Utc).AddTicks(8990),
+                            CreatedAt = new DateTime(2025, 6, 19, 15, 1, 4, 501, DateTimeKind.Utc).AddTicks(1021),
                             IsDeleted = false,
                             MainAddressId = new Guid("ef149a3e-2c0f-45ef-b358-908fa8aa431e"),
                             Name = "Acme Online Store",
@@ -303,7 +371,7 @@ namespace BankingSystem.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("bf9b7e93-aa9a-4686-b770-b6184245514e"),
-                            CreatedAt = new DateTime(2025, 6, 18, 17, 25, 45, 447, DateTimeKind.Utc).AddTicks(9955),
+                            CreatedAt = new DateTime(2025, 6, 19, 15, 1, 4, 501, DateTimeKind.Utc).AddTicks(3546),
                             IsDeleted = false,
                             Name = "Acme Financial Group"
                         });
@@ -372,19 +440,23 @@ namespace BankingSystem.Infrastructure.Migrations
                     b.ToTable("Transactions");
                 });
 
-            modelBuilder.Entity("ApplicationRoleApplicationUser", b =>
+            modelBuilder.Entity("BankingSystem.Domain.Entities.ApplicationUserRole", b =>
                 {
-                    b.HasOne("BankingSystem.Domain.Entities.ApplicationRole", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
+                    b.HasOne("BankingSystem.Domain.Entities.ApplicationRole", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BankingSystem.Domain.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
+                    b.HasOne("BankingSystem.Domain.Entities.ApplicationUser", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BankingSystem.Domain.Entities.Merchant", b =>
@@ -422,6 +494,16 @@ namespace BankingSystem.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Merchant");
+                });
+
+            modelBuilder.Entity("BankingSystem.Domain.Entities.ApplicationRole", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("BankingSystem.Domain.Entities.ApplicationUser", b =>
+                {
+                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("BankingSystem.Domain.Entities.Merchant", b =>

@@ -22,6 +22,7 @@ public class BankingSystemDbContext : DbContext
 	{
 		modelBuilder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
 		modelBuilder.ApplyConfiguration(new ApplicationRoleEntityConfiguration());
+		modelBuilder.ApplyConfiguration(new ApplicationUserRoleEntityConfiguration());
 		modelBuilder.ApplyConfiguration(new AddressEntityConfiguration());
 		modelBuilder.ApplyConfiguration(new MerchantEntityConfiguration());
 		modelBuilder.ApplyConfiguration(new PartnerEntityConfiguration());

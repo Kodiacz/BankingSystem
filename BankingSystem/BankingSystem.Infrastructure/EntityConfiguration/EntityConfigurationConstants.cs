@@ -13,6 +13,7 @@ public static class EntityConfigurationConstants
 	public const int COUNTRY_MAX_LENGTH = 50;
 
 	public const int ROLE_NAME_MAX_LENGTH = 50;
+	public const int ROLE_DESCRIPTION_MAX_LENGTH = 150;
 
 	public const int CURRENCY_MAX_LENGTH = 3;
 	public const int IBAN_MAX_LENGTH = 34;

@@ -1,23 +1,14 @@
-using BankingSystem.Application.Abstractions.Repository;
-using BankingSystem.Application.Implementations.Services;
-using BankingSystem.Infrastructure;
-using BankingSystem.Infrastructure.Repositories;
-using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-builder.Services.AddControllers();
+builder.Services.ConfigureControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddScoped<ITransactionService, TransactionService>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<BankingSystemDbContext>(options =>
-	options.UseSqlServer(connectionString));
+builder.Services.ConfigureSwagger();
+builder.Services.ConfigureDataBase(builder);
+builder.Services.AddApplicationServices();
+builder.Services.AddApplicationAuthentication(builder);
+builder.Services.AddExceptionStatusCodeMappings();
 
 var app = builder.Build();
 

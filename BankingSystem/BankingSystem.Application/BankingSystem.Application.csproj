@@ -10,4 +10,9 @@
     <ProjectReference Include="..\BankingSystem.Domain\BankingSystem.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Enums\Merchants\" />
+    <Folder Include="Enums\Partners\" />
+  </ItemGroup>
+
 </Project>

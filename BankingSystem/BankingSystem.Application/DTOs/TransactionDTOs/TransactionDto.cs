@@ -1,16 +1,21 @@
-﻿namespace BankingSystem.API.DTOs.TransactionDTOs;
+﻿namespace BankingSystem.Application.DTOs.TransactionDTOs;
 
 public class TransactionDto
 {
-	public string ExternalId { get; set; } = string.Empty;
-
+	public TransactionDirection Direction { get; set; }
 	public DateTime CreateDate { get; set; }
 
-	public AmountDto Amount { get; set; } = new();
+	public decimal Amount { get; set; }
 
-	public int Status { get; set; }
+	public string Currency { get; set; } = string.Empty;
 
-	public PartyDto Debtor { get; set; } = new();
+	public string SourceIBAN { get; set; } = string.Empty;
 
-	public PartyDto Beneficiary { get; set; } = new();
+	public string TargetIBAN { get; set; } = string.Empty;
+
+	public TransactionStatus Status { get; set; }
+
+	public string ExternalID { get; set; } = string.Empty;
+
+	public Merchant Merchant { get; set; }
 }

@@ -6,13 +6,16 @@ public class UnitOfWork : IUnitOfWork
 
 	public UnitOfWork(
 		BankingSystemDbContext dbContext,
-		ITransactionRepository transaction)
+		ITransactionRepository transaction,
+		IAuthRepository auth)
 	{
 		_dbContext = dbContext;
 		Transaction = transaction;
+		Auth = auth;
 	}
 
 	public ITransactionRepository Transaction { get; }
+	public IAuthRepository Auth { get; }
 
 	public void Dispose()
 	{

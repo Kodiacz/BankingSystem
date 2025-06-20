@@ -4,7 +4,7 @@ public class ApplicationUser : BaseEntity<Guid>
 {
 	public ApplicationUser()
 	{
-		this.Roles = new List<ApplicationRole>();
+		this.UserRoles = new List<ApplicationUserRole>();
 	}
 
 	public string FirstName { get; set; } = string.Empty;
@@ -21,5 +21,5 @@ public class ApplicationUser : BaseEntity<Guid>
 
 	public string PasswordSalt { get; set; } = string.Empty;
 
-	public List<ApplicationRole> Roles { get; set; }
+	public List<ApplicationUserRole> UserRoles { get; set; }
 }

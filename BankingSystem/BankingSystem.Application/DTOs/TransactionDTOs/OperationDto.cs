@@ -1,4 +1,4 @@
-﻿namespace BankingSystem.API.DTOs.TransactionDTOs;
+﻿namespace BankingSystem.Application.DTOs.TransactionDTOs;
 
 [XmlRoot("Operation")]
 public class OperationDto
@@ -8,5 +8,5 @@ public class OperationDto
 
 	[XmlArray("Transactions")]
 	[XmlArrayItem("Transaction")]
-	public List<TransactionDto> Transactions { get; set; } = new();
+	public List<TransactionExportDto> Transactions { get; set; } = new();
 }
