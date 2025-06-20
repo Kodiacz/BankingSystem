@@ -41,7 +41,7 @@ public class TransactionsController : ControllerBase
 
 	[HttpGet]
 	[ActionName(nameof(GetPagedTransactions))]
-	//[Authorize(Roles = $"{nameof(ApplicationRoleNames.Admin)}, {nameof(ApplicationRoleNames.NormalUser)}")]
+	[Authorize(Roles = $"{nameof(ApplicationRoleNames.Admin)}, {nameof(ApplicationRoleNames.NormalUser)}")]
 	public async Task<ActionResult<PageResult<TransactionDto>>> GetPagedTransactions([FromQuery] TransactionQueryParameters parameters)
 	{
 		var result = await _transactionService.GetPagedTransactionsAsync(parameters);
